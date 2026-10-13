@@ -130,8 +130,7 @@ function LoginPage({onLogin}){
       if(mode==="register"){
         if(!form.name||!form.email||!form.password){setError("Please fill all required fields");setLoading(false);return;}
         if(form.password!==form.confirm){setError("Passwords do not match");setLoading(false);return;}
-        const ep=role==="user"?"/api/v1/auth/register/user":"/api/v1/auth/register/admin";
-        const body=role==="user"
+         const ep=role==="user"?"/auth/register/user":"/auth/register/admin";        const body=role==="user"
           ?{name:form.name,email:form.email,phone:form.phone,password:form.password}
           :{name:form.name,email:form.email,password:form.password};
         const res=await fetch(`${API}${ep}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
@@ -139,7 +138,7 @@ function LoginPage({onLogin}){
         if(data.detail){setError(data.detail);setLoading(false);return;}
         setSuccess("Account created! Please login.");setMode("login");
       }else{
-        const res=await fetch(`${API}/api/v1/auth/login`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:form.email,password:form.password,role})});
+        const res=await fetch(`${API}/auth/login`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:form.email,password:form.password,role})});
         const data=await res.json();
         if(data.detail){setError(data.detail);setLoading(false);return;}
         onLogin(data);

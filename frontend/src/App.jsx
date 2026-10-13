@@ -3,8 +3,7 @@ import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line,
 } from "recharts";
-
-const API = process.env.REACT_APP_API_URL || "http://localhost:8000";
+const API = "https://sentineltrust-api.onrender.com/api/v1";
 const WS  = process.env.REACT_APP_WS_URL  || "ws://localhost:8000/ws";
 
 const FEATURE_COLS = [

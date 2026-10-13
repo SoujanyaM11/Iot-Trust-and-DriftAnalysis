@@ -242,3 +242,6 @@ uvicorn backend.main:app --reload --port 8000
 
 - MongoDB must be running and reachable before the backend starts. Docker is optional.
 - For production deployments, replace hardcoded secrets with a proper secret manager and configure secure SMTP credentials.
+=======
+# Iot-Trust-and-DriftAnalysis
+>>>>>>> 8eff373381f5c2d9236d3e867e02c7a2a2d86fa0

@@ -1,0 +1,149 @@
+mongodb:
+  uri: "mongodb://localhost:27017"
+  database: "sentineltrust"
+  collections:
+    users: "users"
+    admins: "admins"
+    devices: "devices"
+    trust_scores: "trust_scores"
+    alerts: "alerts"
+    policy_violations: "policy_violations"
+    notifications: "notifications"
+    smtp_config: "smtp_config"
+
+device_policies:
+  ip_camera:
+    max_dns_queries: 150
+    max_external_connections: 5
+    tcp_flag_anomaly_threshold: 0.3
+    port_entropy_limit: 3.5
+    max_bandwidth_mbps: 10
+    allowed_ports: [80, 443, 554, 8000]
+    action_on_violation: "alert"
+  temp_sensor:
+    max_dns_queries: 10
+    max_external_connections: 1
+    tcp_flag_anomaly_threshold: 0.1
+    port_entropy_limit: 1.0
+    max_bandwidth_mbps: 1
+    allowed_ports: [1883, 8883]
+    action_on_violation: "alert"
+  router:
+    max_dns_queries: 500
+    max_external_connections: 50
+    tcp_flag_anomaly_threshold: 0.2
+    port_entropy_limit: 4.0
+    max_bandwidth_mbps: 1000
+    allowed_ports: [22, 53, 80, 443, 161, 162, 500, 4500]
+    action_on_violation: "block"
+  smart_hub:
+    max_dns_queries: 100
+    max_external_connections: 10
+    tcp_flag_anomaly_threshold: 0.25
+    port_entropy_limit: 3.0
+    max_bandwidth_mbps: 50
+    allowed_ports: [80, 443, 1883, 8883, 5683, 5684]
+    action_on_violation: "alert"
+  plc:
+    max_dns_queries: 5
+    max_external_connections: 0
+    tcp_flag_anomaly_threshold: 0.1
+    port_entropy_limit: 1.5
+    max_bandwidth_mbps: 10
+    allowed_ports: [502, 44818, 102]
+    action_on_violation: "block"
+  smart_lock:
+    max_dns_queries: 5
+    max_external_connections: 2
+    tcp_flag_anomaly_threshold: 0.15
+    port_entropy_limit: 1.0
+    max_bandwidth_mbps: 1
+    allowed_ports: [80, 443, 1883]
+    action_on_violation: "block"
+  gateway:
+    max_dns_queries: 200
+    max_external_connections: 20
+    tcp_flag_anomaly_threshold: 0.2
+    port_entropy_limit: 3.5
+    max_bandwidth_mbps: 100
+    allowed_ports: [80, 443, 1883, 8883, 5683, 5684, 53]
+    action_on_violation: "alert"
+  actuator:
+    max_dns_queries: 10
+    max_external_connections: 2
+    tcp_flag_anomaly_threshold: 0.15
+    port_entropy_limit: 1.5
+    max_bandwidth_mbps: 5
+    allowed_ports: [80, 443, 1883]
+    action_on_violation: "alert"
+  other:
+    max_dns_queries: 50
+    max_external_connections: 10
+    tcp_flag_anomaly_threshold: 0.3
+    port_entropy_limit: 3.0
+    max_bandwidth_mbps: 10
+    allowed_ports: [80, 443, 1883]
+    action_on_violation: "alert"
+
+trust_weights:
+  behavioral_stability: 0.40
+  policy_compliance: 0.30
+  historical_trust: 0.20
+  recent_activity: 0.10
+
+trust_levels:
+  - min: 90
+    max: 100
+    level: "trusted"
+    color: "#16a34a"
+  - min: 70
+    max: 89
+    level: "stable"
+    color: "#65a30d"
+  - min: 50
+    max: 69
+    level: "suspicious"
+    color: "#d97706"
+  - min: 30
+    max: 49
+    level: "high_risk"
+    color: "#ea580c"
+  - min: 0
+    max: 29
+    level: "critical"
+    color: "#dc2626"
+
+ml_models:
+  isolation_forest:
+    n_estimators: 200
+    contamination: 0.03
+    random_state: 42
+  lstm_autoencoder:
+    sequence_length: 48
+    n_features: 12
+    encoder_dims: [64, 32]
+    decoder_dims: [32, 64]
+    epochs: 50
+    batch_size: 32
+    learning_rate: 0.001
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42
+
+telemetry:
+  scoring_interval_seconds: 30
+  history_retention_windows: 60
+  anomaly_threshold: 0.4
+
+email:
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  alert_cooldown_seconds: 300
+
+app:
+  access_token_expire_minutes: 60
+  cors_origins: ["*"]

@@ -1,0 +1,15 @@
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+build/
+.env
+.env.*
+!.env.example
+backend/local_store.json
+backend/auth_store.json
+backend/notifications_store.json
+backend/smtp_config.json
+backend/user_data/
